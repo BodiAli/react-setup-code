@@ -9,6 +9,9 @@ import prettier from "eslint-config-prettier";
 export default [
   { ignores: ["dist"] },
   {
+    ...jestDom.configs["flat/recommended"],
+  },
+  {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
       ecmaVersion: 2020,
@@ -35,13 +38,6 @@ export default [
       ...reactHooks.configs.recommended.rules,
       "react/jsx-no-target-blank": "off",
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-    },
-  },
-  {
-    ...jestDom.configs["flat/recommended"],
-  },
-  {
-    rules: {
       ...prettier.rules,
     },
   },
