@@ -1,45 +1,41 @@
-import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
+import tseslint from "typescript-eslint";
 import globals from "globals";
-import react from "eslint-plugin-react";
+import eslintReact from "@eslint-react/eslint-plugin";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import jestDom from "eslint-plugin-jest-dom";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
+import { globalIgnores } from "eslint/config";
 
-export default defineConfig([
-  { ignores: ["dist"] },
+export default tseslint.config([
+  globalIgnores(["dist"]),
   {
     ...jestDom.configs["flat/recommended"],
   },
   {
-    files: ["**/*.{js,jsx}"],
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.strictTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+      eslintReact.configs["recommended-type-checked"],
+      reactHooks.configs["recommended-latest"],
+      reactRefresh.configs.vite,
+    ],
     languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.vitest,
       },
+      ecmaVersion: "latest",
       parserOptions: {
-        ecmaVersion: "latest",
-        ecmaFeatures: { jsx: true },
-        sourceType: "module",
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        tsconfigRootDir: import.meta.dirname,
       },
     },
-    settings: { react: { version: "detect" } },
-    plugins: {
-      js,
-      react,
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-    },
-    extends: ["js/recommended"],
     rules: {
-      ...react.configs.recommended.rules,
-      ...react.configs["jsx-runtime"].rules,
-      ...reactHooks.configs["recommended-latest"].rules,
-      "react/jsx-no-target-blank": "off",
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-      "react/prop-types": "off",
+      "@eslint-react/naming-convention/component-name": ["warn", "PascalCase"],
     },
   },
   eslintConfigPrettier,
