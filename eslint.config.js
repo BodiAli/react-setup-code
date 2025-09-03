@@ -35,9 +35,6 @@ export default tseslint.config([
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    rules: {
-      "@eslint-react/naming-convention/component-name": ["warn", "PascalCase"],
-    },
   },
   eslintConfigPrettier,
   {
@@ -46,7 +43,7 @@ export default tseslint.config([
       vitest,
     },
     rules: {
-      ...vitest.configs.recommended.rules,
+      ...vitest.configs.all.rules,
       "@typescript-eslint/unbound-method": "off",
     },
   },
