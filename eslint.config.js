@@ -7,9 +7,9 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import jestDom from "eslint-plugin-jest-dom";
 import vitest from "@vitest/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
-import { globalIgnores } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-export default tseslint.config([
+export default defineConfig([
   globalIgnores(["dist"]),
   {
     ...jestDom.configs["flat/recommended"],
