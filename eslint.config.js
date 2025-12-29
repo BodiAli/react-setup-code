@@ -75,7 +75,6 @@ export default defineConfig([
       ...vitest.configs.all.rules,
       "@typescript-eslint/unbound-method": "off",
       "vitest/no-hooks": "off",
-      "vitest/no-conditional-in-test": "off",
     },
     settings: {
       vitest: {
